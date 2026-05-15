@@ -1,6 +1,6 @@
 # Name of this app
 service: fizzy
-image: drpedapati/fizzy
+image: basecamp/fizzy
 
 
 #-- About your deployment --#
@@ -35,9 +35,9 @@ env:
 
 #-- General configuration --#
 
-# Use a local registry to deploy.
+# Use the official prebuilt Fizzy image.
 registry:
-  server: localhost:5555
+  server: ghcr.io
 
 # Handy aliases for interacting with your deployment. For eaxmple: `bin/kamal console` will connect to a
 # Rails console in production.
