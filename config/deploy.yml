@@ -31,6 +31,7 @@ env:
     BASE_URL: https://requests.clinclaw.com
     MAILER_FROM_ADDRESS: requests@clinclaw.com
     MICROSOFT_CLIENT_ID: 800d8fbe-328e-40f3-8549-0ed4726fb37d
+    MICROSOFT_OAUTH_ONLY: true
     MICROSOFT_TENANT_ID: 680254d4-278b-4aa1-aca8-c2600f79c533
     MICROSOFT_REDIRECT_URI: https://requests.clinclaw.com/session/microsoft_oauth/callback
     MULTI_TENANT: false

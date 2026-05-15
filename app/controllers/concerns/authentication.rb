@@ -6,6 +6,8 @@ module Authentication
     before_action :require_authentication
     helper_method :authenticated?
     helper_method :email_address_pending_authentication
+    helper_method :microsoft_oauth_configured?
+    helper_method :microsoft_oauth_only?
 
     etag { Current.identity.id if authenticated? }
 
@@ -33,6 +35,23 @@ module Authentication
   private
     def authenticated?
       Current.identity.present?
+    end
+
+    def microsoft_oauth_configured?
+      ENV["MICROSOFT_CLIENT_ID"].present? &&
+        ENV["MICROSOFT_CLIENT_SECRET"].present? &&
+        ENV["MICROSOFT_TENANT_ID"].present?
+    end
+
+    def microsoft_oauth_only?
+      ActiveModel::Type::Boolean.new.cast(ENV["MICROSOFT_OAUTH_ONLY"]) && microsoft_oauth_configured?
+    end
+
+    def redirect_to_microsoft_oauth
+      respond_to do |format|
+        format.html { redirect_to main_app.session_microsoft_oauth_path(script_name: nil) }
+        format.json { render json: { message: "Use CCHMC sign-in." }, status: :unauthorized }
+      end
     end
 
     def require_account

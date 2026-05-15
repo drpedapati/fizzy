@@ -24,8 +24,10 @@
       <p class="margin-none-block-start">You don’t have any ClinClaw accounts.</p>
     <% end %>
 
-    <%= link_to new_signup_path, class: "btn center txt-small margin-block-start", data: { turbo_prefetch: false } do %>
-      <span>Sign up for a new ClinClaw account</span>
+    <% unless microsoft_oauth_only? %>
+      <%= link_to new_signup_path, class: "btn center txt-small margin-block-start", data: { turbo_prefetch: false } do %>
+        <span>Sign up for a new ClinClaw account</span>
+      <% end %>
     <% end %>
   </section>
 <% end %>

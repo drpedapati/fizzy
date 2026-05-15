@@ -3,12 +3,13 @@ class SessionsController < ApplicationController
 
   disallow_account_scope
   require_unauthenticated_access except: :destroy
+  before_action :enforce_microsoft_oauth_only, only: :create
   rate_limit to: 10, within: 3.minutes, only: :create, with: :rate_limit_exceeded
 
   layout "public"
 
   def new
-    @authentication_options = passkey_authentication_options
+    @authentication_options = passkey_authentication_options unless microsoft_oauth_only?
   end
 
   def create
@@ -38,6 +39,10 @@ class SessionsController < ApplicationController
         signup = Signup.new(email_address: email_address)
         signup.create_identity if signup.valid?(:identity_creation) && Account.accepting_signups?
       end
+    end
+
+    def enforce_microsoft_oauth_only
+      redirect_to_microsoft_oauth if microsoft_oauth_only?
     end
 
     def email_address

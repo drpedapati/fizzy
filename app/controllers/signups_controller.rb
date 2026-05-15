@@ -4,6 +4,7 @@ class SignupsController < ApplicationController
   disallow_account_scope
   allow_unauthenticated_access
   rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_signup_path, alert: "Try again later." }
+  before_action :enforce_microsoft_oauth_only
   before_action :redirect_authenticated_user
   before_action :enforce_tenant_limit
 
@@ -23,6 +24,10 @@ class SignupsController < ApplicationController
   end
 
   private
+    def enforce_microsoft_oauth_only
+      redirect_to_microsoft_oauth if microsoft_oauth_only?
+    end
+
     def redirect_authenticated_user
       redirect_to new_signup_completion_path if authenticated?
     end

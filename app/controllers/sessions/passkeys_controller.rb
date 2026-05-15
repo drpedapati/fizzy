@@ -3,6 +3,7 @@ class Sessions::PasskeysController < ApplicationController
 
   disallow_account_scope
   require_unauthenticated_access
+  before_action :enforce_microsoft_oauth_only
   rate_limit to: 10, within: 3.minutes, only: :create, with: :rate_limit_exceeded
 
   def create
@@ -22,6 +23,10 @@ class Sessions::PasskeysController < ApplicationController
   end
 
   private
+    def enforce_microsoft_oauth_only
+      redirect_to_microsoft_oauth if microsoft_oauth_only?
+    end
+
     def rate_limit_exceeded
       rate_limit_exceeded_message = "Try again later."
 

@@ -43,12 +43,6 @@ class Sessions::MicrosoftOauthsController < ApplicationController
       end
     end
 
-    def microsoft_oauth_configured?
-      ENV["MICROSOFT_CLIENT_ID"].present? &&
-        ENV["MICROSOFT_CLIENT_SECRET"].present? &&
-        ENV["MICROSOFT_TENANT_ID"].present?
-    end
-
     def authorization_url(state:, nonce:)
       uri = URI("https://login.microsoftonline.com/#{tenant_id}/oauth2/v2.0/authorize")
       uri.query = {

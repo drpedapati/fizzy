@@ -1,48 +1,58 @@
-<% @page_title = "Enter your email" %>
+<% @page_title = "Sign in" %>
 
 <div class="panel panel--centered flex flex-column gap-half">
+  <% if microsoft_oauth_only? %>
+    <%= image_tag "cchmc-logo.png", alt: "Cincinnati Children's", width: 188, height: 64, class: "margin-inline-auto margin-block-end" %>
+  <% end %>
+
   <h1 class="txt-x-large font-weight-black margin-block-end">Get into ClinClaw</h1>
 
-  <%= form_with url: session_path, class: "flex flex-column gap-half txt-medium" do |form| %>
-    <div class="flex align-center gap">
-      <label class="flex align-center gap input input--actor">
-        <%= form.email_field :email_address, required: true, class: "input txt-large full-width", autofocus: true, autocomplete: "username webauthn", placeholder: "Enter your email address…" %>
-      </label>
-    </div>
-
-    <% if Account.accepting_signups? %>
-      <p><strong>New here?</strong> <%= link_to "Sign up", new_signup_path %> to create an account. <strong>Already have an account?</strong> Enter your email and we’ll get you signed in.</p>
-    <% else %>
-      <p>Enter your email and we’ll get you signed in.</p>
-    <% end %>
-
-    <button type="submit" id="log_in" class="btn btn--link center txt-medium">
-      <span>Let’s go</span>
-      <%= icon_tag "arrow-right" %>
-    </button>
-  <% end %>
-
-  <% if microsoft_oauth_configured? %>
-    <div class="full-width flex align-center gap">
-      <hr class="separator--horizontal flex-item-grow" style="--border-color: var(--color-ink-light)" aria-hidden="true">
-      <span class="txt-small txt-subtle">or</span>
-      <hr class="separator--horizontal flex-item-grow" style="--border-color: var(--color-ink-light)" aria-hidden="true">
-    </div>
-
-    <%= link_to session_microsoft_oauth_path, class: "btn btn--plain txt-link center txt-medium" do %>
+  <% if microsoft_oauth_only? %>
+    <%= link_to session_microsoft_oauth_path, class: "btn btn--link center txt-medium" do %>
       <span>Continue with CCHMC</span>
+      <%= icon_tag "arrow-right" %>
     <% end %>
+  <% else %>
+    <%= form_with url: session_path, class: "flex flex-column gap-half txt-medium" do |form| %>
+      <div class="flex align-center gap">
+        <label class="flex align-center gap input input--actor">
+          <%= form.email_field :email_address, required: true, class: "input txt-large full-width", autofocus: true, autocomplete: "username webauthn", placeholder: "Enter your email address…" %>
+        </label>
+      </div>
+
+      <% if Account.accepting_signups? %>
+        <p><strong>New here?</strong> <%= link_to "Sign up", new_signup_path %> to create an account. <strong>Already have an account?</strong> Enter your email and we’ll get you signed in.</p>
+      <% else %>
+        <p>Enter your email and we’ll get you signed in.</p>
+      <% end %>
+
+      <button type="submit" id="log_in" class="btn btn--link center txt-medium">
+        <span>Let’s go</span>
+        <%= icon_tag "arrow-right" %>
+      </button>
+    <% end %>
+
+    <% if microsoft_oauth_configured? %>
+      <div class="full-width flex align-center gap">
+        <hr class="separator--horizontal flex-item-grow" style="--border-color: var(--color-ink-light)" aria-hidden="true">
+        <span class="txt-small txt-subtle">or</span>
+        <hr class="separator--horizontal flex-item-grow" style="--border-color: var(--color-ink-light)" aria-hidden="true">
+      </div>
+
+      <%= link_to session_microsoft_oauth_path, class: "btn btn--plain txt-link center txt-medium" do %>
+        <span>Continue with CCHMC</span>
+      <% end %>
+    <% end %>
+
+    <div class="margin-block-start">
+      <%= passkey_sign_in_button "Sign in with a passkey", session_passkey_path,
+            options: @authentication_options,
+            mediation: "conditional",
+            error: { class: "txt-negative margin-block-half" },
+            cancellation: { class: "txt-subtle margin-block-half" },
+            class: "btn btn--plain txt-link center txt-small" %>
+    </div>
   <% end %>
-
-  <div class="margin-block-start">
-    <%= passkey_sign_in_button "Sign in with a passkey", session_passkey_path,
-          options: @authentication_options,
-          mediation: "conditional",
-          error: { class: "txt-negative margin-block-half" },
-          cancellation: { class: "txt-subtle margin-block-half" },
-          class: "btn btn--plain txt-link center txt-small" %>
-  </div>
-
 </div>
 
 <% content_for :footer do %>

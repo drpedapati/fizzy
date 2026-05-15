@@ -2,6 +2,7 @@ class Sessions::MagicLinksController < ApplicationController
   disallow_account_scope
   require_unauthenticated_access
   rate_limit to: 10, within: 15.minutes, only: :create, with: :rate_limit_exceeded
+  before_action :enforce_microsoft_oauth_only
   before_action :ensure_that_email_address_pending_authentication_exists
 
   layout "public"
@@ -26,6 +27,10 @@ class Sessions::MagicLinksController < ApplicationController
           format.json { render json: { message: alert_message }, status: :unauthorized }
         end
       end
+    end
+
+    def enforce_microsoft_oauth_only
+      redirect_to_microsoft_oauth if microsoft_oauth_only?
     end
 
     def code
