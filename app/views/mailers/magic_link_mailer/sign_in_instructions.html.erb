@@ -1,9 +1,9 @@
 
 <% if @magic_link.for_sign_in? %>
-  <h1 class="title">Fizzy verification code</h1>
-  <p class="subtitle">Please enter this 6-character verification code on the Fizzy sign-in page:</p>
+  <h1 class="title">ClinClaw verification code</h1>
+  <p class="subtitle">Please enter this 6-character verification code on the ClinClaw sign-in page:</p>
 <% else %>
-  <h1 class="title">Welcome to Fizzy!</h1>
+  <h1 class="title">Welcome to ClinClaw!</h1>
   <p class="subtitle">Please enter this 6-character verification code to finish creating your account:</p>
 <% end %>
 
@@ -15,6 +15,6 @@
   <p>P.S. You can make your account more secure and sign-in faster with a <%= link_to "Passkey", my_passkeys_url(script_name: account.slug) %></p>
 <% end %>
 
-<p class="footer">Need help? <%= mail_to "support@fizzy.do", "Send us an email"%>.
+<p class="footer">Need help? <%= mail_to "requests@send.clinclaw.com", "Send us an email"%>.
 </p>
 

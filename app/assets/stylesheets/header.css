@@ -86,13 +86,16 @@
   }
 
   .header__logo {
-    color: var(--color-ink);
+    color: var(--color-brand-plum);
     font-size: 1.2rem;
+    font-weight: 900;
+    gap: 0.45em;
     inline-size: auto;
     margin-block-start: 0.1em;
+    text-decoration: none;
 
-    span {
-      background: var(--color-ink-lightest);
+    .header__logo-mark {
+      background: var(--color-canvas);
       block-size: auto;
       border-radius: 0.3125em;
       box-shadow:
@@ -103,19 +106,20 @@
       ;
       display: grid;
       height: 1.5em;
-      inline-size: 1.5em;
-      padding: 0.325em 0.275em 0.225em 0.275em;
+      inline-size: 1.8em;
+      padding: 0.16em;
       place-content: center;
-      width: 1.5em;
+      width: 1.8em;
     }
 
-    svg {
+    img {
       height: 100%;
-      margin-inline-start: 0.4125em;
-      margin-inline-end: 0.5375em;
-      max-height: 0.8625em;
-      overflow: visible;
+      object-fit: contain;
       width: auto;
+    }
+
+    .header__logo-wordmark {
+      line-height: 1;
     }
   }
 

@@ -87,7 +87,7 @@
 
   .btn--link {
     --btn-background: var(--color-link);
-    --btn-border-color: var(--color-canvas);
+    --btn-border-color: var(--color-link);
     --btn-color: var(--color-ink-inverted);
     --focus-ring-color: var(--color-link);
   }

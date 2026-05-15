@@ -5,7 +5,7 @@ class ExportMailer < ApplicationMailer
     @export = export
     @user = export.user
 
-    mail to: @user.identity.email_address, subject: "Your Fizzy data export is ready for download"
+    mail to: @user.identity.email_address, subject: "Your ClinClaw data export is ready for download"
   end
 
   private
