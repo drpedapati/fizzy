@@ -161,6 +161,9 @@ Rails.application.routes.draw do
     scope module: :sessions do
       resources :transfers
       resource :magic_link
+      resource :microsoft_oauth, only: :show, controller: :microsoft_oauths do
+        get :callback
+      end
       resource :menu
       resource :passkey, only: :create
     end

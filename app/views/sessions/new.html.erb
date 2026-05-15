@@ -22,6 +22,18 @@
     </button>
   <% end %>
 
+  <% if microsoft_oauth_configured? %>
+    <div class="full-width flex align-center gap">
+      <hr class="separator--horizontal flex-item-grow" style="--border-color: var(--color-ink-light)" aria-hidden="true">
+      <span class="txt-small txt-subtle">or</span>
+      <hr class="separator--horizontal flex-item-grow" style="--border-color: var(--color-ink-light)" aria-hidden="true">
+    </div>
+
+    <%= link_to session_microsoft_oauth_path, class: "btn btn--plain txt-link center txt-medium" do %>
+      <span>Continue with CCHMC</span>
+    <% end %>
+  <% end %>
+
   <div class="margin-block-start">
     <%= passkey_sign_in_button "Sign in with a passkey", session_passkey_path,
           options: @authentication_options,

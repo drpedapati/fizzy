@@ -3,6 +3,12 @@ module ApplicationHelper
     "ClinClaw"
   end
 
+  def microsoft_oauth_configured?
+    ENV["MICROSOFT_CLIENT_ID"].present? &&
+      ENV["MICROSOFT_CLIENT_SECRET"].present? &&
+      ENV["MICROSOFT_TENANT_ID"].present?
+  end
+
   def page_title_tag
     account_name = if Current.account && Current.session&.identity&.users&.many?
       Current.account&.name
